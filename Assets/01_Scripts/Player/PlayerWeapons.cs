@@ -8,7 +8,7 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] private Transform muzzle;
 
     public float MuzzleHeight => muzzle != null ? muzzle.position.y : 0f;
-    public string CurrentAmmoText => _currentWeapon != null ? _currentWeapon.BaseGetAmmoText(_instance) : "No Weapon is here";
+    public string CurrentAmmoText => _currentWeapon != null ? _currentWeapon.GetAmmoText(_instance) : "No Weapon is here";
 
     private PlayerWeaponSO _currentWeapon => _instance?.WeaponsSO;
     private WeaponInstance[] _weaponInstances;
@@ -28,7 +28,7 @@ public class PlayerWeapons : MonoBehaviour
             {
                 WeaponInstance instance = weaponSO[i].BaseCreateInstance();
 
-                weaponSO[i].BaseInitialize(instance, weaponSocket);
+                weaponSO[i].Initialize(instance, weaponSocket);
 
                 _weaponInstances[i] = instance;
             }
@@ -83,7 +83,7 @@ public class PlayerWeapons : MonoBehaviour
             {
                 newWeapon.SpawnedPrefab.SetActive(true);
             }
-            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(newWeapon));
+            _events?.CallbackOnAmmoChanged(_currentWeapon.GetAmmoText(newWeapon));
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayerWeapons : MonoBehaviour
             return null;
         }
 
-        return _currentWeapon.BaseGetAttackState(mediator, _instance);
+        return _currentWeapon.GetAttackState(mediator, _instance);
     }
 
     public bool CanReload()
@@ -104,15 +104,15 @@ public class PlayerWeapons : MonoBehaviour
             return false;
         }
 
-        return _currentWeapon.BaseCanReload(_instance);
+        return _currentWeapon.CanReload(_instance);
     }
 
     public void Reload()
     {
         if (_currentWeapon != null)
         {
-            _currentWeapon.BaseReload(_instance);
-            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(_instance));
+            _currentWeapon.Reload(_instance);
+            _events?.CallbackOnAmmoChanged(_currentWeapon.GetAmmoText(_instance));
         }
     }
 
@@ -120,8 +120,8 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (_currentWeapon != null)
         {
-            _currentWeapon.BaseBeginAttack(_instance, transform, muzzle);
-            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(_instance));
+            _currentWeapon.BeginAttack(_instance, transform, muzzle);
+            _events?.CallbackOnAmmoChanged(_currentWeapon.GetAmmoText(_instance));
         }
     }
 
@@ -129,7 +129,7 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (_currentWeapon != null)
         {
-            _currentWeapon.BaseTickAttack(_instance, transform, muzzle);
+            _currentWeapon.TickAttack(_instance, transform, muzzle);
         }
     }
 
@@ -137,7 +137,7 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (_currentWeapon != null)
         {
-            _currentWeapon.BaseEndAttack(_instance, transform, muzzle);
+            _currentWeapon.EndAttack(_instance, transform, muzzle);
         }
     }
 
