@@ -7,16 +7,16 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] private Transform weaponSocket;
     [SerializeField] private Transform muzzle;
 
-    public PlayerWeaponSO CurrentWeapon => _instance?.WeaponsSO;
     public float MuzzleHeight => muzzle != null ? muzzle.position.y : 0f;
-    public string CurrentAmmoText => CurrentWeapon != null ? CurrentWeapon.BaseGetAmmoText(_instance) : "No Weapon is here";
+    public string CurrentAmmoText => _currentWeapon != null ? _currentWeapon.BaseGetAmmoText(_instance) : "No Weapon is here";
 
+    private PlayerWeaponSO _currentWeapon => _instance?.WeaponsSO;
     private WeaponInstance[] _weaponInstances;
     private WeaponInstance _instance => (_weaponInstances != null && _weaponInstances.Length > 0) ? _weaponInstances[_currentWeaponIndex] : null;
-    private int _currentWeaponIndex = 0;
     private PlayerEvents _events;
+    private int _currentWeaponIndex = 0;
     private int _tempWeaponIndex;
-
+    
     public void Initialize(PlayerEvents events)
     {
         _events = events;
@@ -83,61 +83,61 @@ public class PlayerWeapons : MonoBehaviour
             {
                 newWeapon.SpawnedPrefab.SetActive(true);
             }
-            _events?.CallbackOnAmmoChanged(CurrentWeapon.BaseGetAmmoText(newWeapon));
+            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(newWeapon));
         }
     }
 
     public BaseState GetAttackState(PlayerMediator mediator)
     {
-        if (CurrentWeapon == null)
+        if (_currentWeapon == null)
         {
             return null;
         }
 
-        return CurrentWeapon.BaseGetAttackState(mediator, _instance);
+        return _currentWeapon.BaseGetAttackState(mediator, _instance);
     }
 
     public bool CanReload()
     {
-        if (CurrentWeapon == null)
+        if (_currentWeapon == null)
         {
             return false;
         }
 
-        return CurrentWeapon.BaseCanReload(_instance);
+        return _currentWeapon.BaseCanReload(_instance);
     }
 
     public void Reload()
     {
-        if (CurrentWeapon != null)
+        if (_currentWeapon != null)
         {
-            CurrentWeapon.BaseReload(_instance);
-            _events?.CallbackOnAmmoChanged(CurrentWeapon.BaseGetAmmoText(_instance));
+            _currentWeapon.BaseReload(_instance);
+            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(_instance));
         }
     }
 
     public void BeginAttack()
     {
-        if (CurrentWeapon != null)
+        if (_currentWeapon != null)
         {
-            CurrentWeapon.BaseBeginAttack(_instance, transform, muzzle);
-            _events?.CallbackOnAmmoChanged(CurrentWeapon.BaseGetAmmoText(_instance));
+            _currentWeapon.BaseBeginAttack(_instance, transform, muzzle);
+            _events?.CallbackOnAmmoChanged(_currentWeapon.BaseGetAmmoText(_instance));
         }
     }
 
     public void TickAttack()
     {
-        if (CurrentWeapon != null)
+        if (_currentWeapon != null)
         {
-            CurrentWeapon.BaseTickAttack(_instance, transform, muzzle);
+            _currentWeapon.BaseTickAttack(_instance, transform, muzzle);
         }
     }
 
     public void EndAttack()
     {
-        if (CurrentWeapon != null)
+        if (_currentWeapon != null)
         {
-            CurrentWeapon.BaseEndAttack(_instance, transform, muzzle);
+            _currentWeapon.BaseEndAttack(_instance, transform, muzzle);
         }
     }
 
@@ -146,7 +146,7 @@ public class PlayerWeapons : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            CurrentWeapon?.OnDrawAttackGizmos(transform, muzzle);
+            _currentWeapon?.OnDrawAttackGizmos(transform, muzzle);
         }
         else
         {
