@@ -8,7 +8,6 @@ public class PlayerWeapons : MonoBehaviour
     [SerializeField] private Transform muzzle;
 
     public PlayerWeaponSO CurrentWeapon => _instance?.WeaponsSO;
-    public int TempWeaponIndex { get; private set; }
     public float MuzzleHeight => muzzle != null ? muzzle.position.y : 0f;
     public string CurrentAmmoText => CurrentWeapon != null ? CurrentWeapon.BaseGetAmmoText(_instance) : "No Weapon is here";
 
@@ -16,6 +15,7 @@ public class PlayerWeapons : MonoBehaviour
     private WeaponInstance _instance => (_weaponInstances != null && _weaponInstances.Length > 0) ? _weaponInstances[_currentWeaponIndex] : null;
     private int _currentWeaponIndex = 0;
     private PlayerEvents _events;
+    private int _tempWeaponIndex;
 
     public void Initialize(PlayerEvents events)
     {
@@ -66,7 +66,7 @@ public class PlayerWeapons : MonoBehaviour
 
     public void PendingSwap(int index)
     {
-        TempWeaponIndex = index;
+        _tempWeaponIndex = index;
     }
 
     public void ExecuteSwap()
@@ -74,7 +74,7 @@ public class PlayerWeapons : MonoBehaviour
         var oldWeapon = _weaponInstances[_currentWeaponIndex];
         if (oldWeapon?.SpawnedPrefab != null) oldWeapon.SpawnedPrefab.SetActive(false);
 
-        _currentWeaponIndex = TempWeaponIndex;
+        _currentWeaponIndex = _tempWeaponIndex;
 
         var newWeapon = _weaponInstances[_currentWeaponIndex];
         if (newWeapon != null)
