@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputs : MonoBehaviour, IInputReader
+public class PlayerInputs : MonoBehaviour
 {
     public Vector3 MoveInput { get; private set; }
     public bool IsRunning { get; private set; }

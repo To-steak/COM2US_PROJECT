@@ -8,8 +8,8 @@ namespace Player
 
         public override void Tick()
         {
-            Vector3 input = _mediator.InputReader.MoveInput;
-            bool isRunning = _mediator.InputReader.IsRunning;
+            Vector3 input = _mediator.Inputs.MoveInput;
+            bool isRunning = _mediator.Inputs.IsRunning;
 
             if (input == Vector3.zero)
             {

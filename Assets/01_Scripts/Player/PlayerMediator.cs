@@ -14,7 +14,7 @@ public class PlayerMediator : MonoBehaviour
     public PlayerAnimations Animations { get; private set; }
     public PlayerWeapons Weapons { get; private set; }
     public PlayerHealth Health { get; private set; }
-    public IInputReader InputReader { get; private set; }
+    public PlayerInputs Inputs { get; private set; }
     public PlayerEvents Events { get; private set; }
     public PlayerPresenter PlayerPresenter { get; private set; }
     public PlayerUI PlayerUI { get; private set; }
@@ -39,7 +39,7 @@ public class PlayerMediator : MonoBehaviour
         Animations = GetComponent<PlayerAnimations>();
         Health = GetComponent<PlayerHealth>();
         Weapons = GetComponent<PlayerWeapons>();
-        InputReader = GetComponent<IInputReader>();
+        Inputs = GetComponent<PlayerInputs>();
         PlayerPresenter = GetComponent<PlayerPresenter>();
         PlayerUI = GetComponent<PlayerUI>();
 
@@ -105,7 +105,7 @@ public class PlayerMediator : MonoBehaviour
 
     void Update()
     {
-        Locomotions.SetMousePosition(InputReader.MousePosition);
+        Locomotions.SetMousePosition(Inputs.MousePosition);
         Locomotions.SetMuzzleHeight(Weapons.MuzzleHeight);
         Locomotions.Tick();
         _currentState.Tick();

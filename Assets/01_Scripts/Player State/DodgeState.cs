@@ -10,7 +10,7 @@ namespace Player
         {
             _mediator.Locomotions.SetRotationLock(true);
 
-            Vector3 input = _mediator.InputReader.MoveInput;
+            Vector3 input = _mediator.Inputs.MoveInput;
             if (input != Vector3.zero)
             {
                 _mediator.Locomotions.SetDirection(input);

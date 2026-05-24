@@ -16,7 +16,7 @@ namespace Player
 
         public override void Tick()
         {
-            Vector3 input = _mediator.InputReader.MoveInput;
+            Vector3 input = _mediator.Inputs.MoveInput;
             _mediator.Locomotions.SetDirection(input);
 
             if (_mediator.Locomotions.VerticalVelocity <= 0f && _mediator.Locomotions.IsGround)

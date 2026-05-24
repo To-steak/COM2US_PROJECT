@@ -23,7 +23,7 @@ namespace Player
         public virtual void HandleAnimationCommit() { }
         public virtual void HandleAnimationFinished()
         {
-            if (_mediator.InputReader.MoveInput == Vector3.zero)
+            if (_mediator.Inputs.MoveInput == Vector3.zero)
             {
                 _mediator.ChangeState(_mediator.IdleState);
             }

@@ -8,7 +8,7 @@ namespace Player
 
         public override void Tick()
         {
-            Vector3 input = _mediator.InputReader.MoveInput;
+            Vector3 input = _mediator.Inputs.MoveInput;
             _mediator.Locomotions.SetDirection(input);
             _mediator.Animations.SetMoveAnimation(input);
         }

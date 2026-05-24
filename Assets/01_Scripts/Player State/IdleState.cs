@@ -14,7 +14,7 @@ namespace Player
 
         public override void Tick()
         {
-            Vector3 input = _mediator.InputReader.MoveInput;
+            Vector3 input = _mediator.Inputs.MoveInput;
 
             if (input != Vector3.zero)
             {
