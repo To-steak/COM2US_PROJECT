@@ -67,5 +67,5 @@ public class EnemyAnimations : MonoBehaviour, IAnimationEventReceiver
     }
 
     public void NotifyAnimationFinished() => _events.CallbackOnAnimationFinished();
-    public void NotifyAttackCommit() => _events.CallbackOnAttackCommit();
+    public void NotifyAnimationCommit() => _events.CallbackOnAttackCommit();
 }

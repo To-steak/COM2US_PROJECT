@@ -41,7 +41,7 @@ public class AnimationCommitSMB : StateMachineBehaviour
             if (!_isTriggered[i] && stateInfo.normalizedTime >= commitTimes[i])
             {
                 _isTriggered[i] = true;
-                _receiver?.NotifyAttackCommit();
+                _receiver?.NotifyAnimationCommit();
             }
         }
     }

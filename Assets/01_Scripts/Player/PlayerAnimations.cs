@@ -108,5 +108,5 @@ public class PlayerAnimations : MonoBehaviour, IAnimationEventReceiver
     }
 
     public void NotifyAnimationFinished() => _events.CallbackOnAnimationFinished();
-    public void NotifyAttackCommit() => _events.CallbackOnAnimationCommitted();
+    public void NotifyAnimationCommit() => _events.CallbackOnAnimationCommitted();
 }
